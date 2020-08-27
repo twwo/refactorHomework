@@ -26,6 +26,35 @@ rankTest('test1:test rating with answer B', t => {
     t.is(result, 'B');
 })
 
+rankTest('test2:test rating with answer A', t => {
+    const voyage = {
+      zone: 'west-indies',
+      length: 1,
+    };
+    const history = [
+      {
+        zone: 'east-indies',
+        profit: 3,
+      },{
+        zone: 'west-indies',
+        profit: 2,
+      },{
+        zone: 'china',
+        profit: 1,
+      },
+      {
+        zone: 'west-africa',
+        profit: 7,
+      },
+      {
+        zone: 'west-africa',
+        profit: 7,
+      },
+    ];
+    const result = rating(voyage, history);
+    t.is(result, 'A');
+})
+
 rankTest('test voyageRisk with length < 4', t => {
     const voyage = {
       zone: 'west-indies',
