@@ -72,3 +72,14 @@ rankTest('test hasChina with history has china', t => {
     const result = hasChina(history);
     t.is(true, result);
 })
+
+rankTest('test hasChina with history not has china', t => {
+    const history = [
+          {
+            zone: 'west-indies',
+            profit: -2,
+          }
+        ];
+    const result = hasChina(history);
+    t.is(false, result);
+})
