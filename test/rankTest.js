@@ -1,5 +1,5 @@
 const rankTest = require('ava');
-const {rating, voyageRisk} = require('../src/rank');
+const {rating, voyageRisk, hasChina} = require('../src/rank');
 
 rankTest('test1:test rating with answer B', t => {
     const voyage = {
@@ -60,4 +60,15 @@ rankTest('test voyageRisk with zone = china', t => {
     };
     const result = voyageRisk(voyage);
     t.is(result, 9);
+})
+
+rankTest('test hasChina with history has china', t => {
+    const history = [
+          {
+            zone: 'china',
+            profit: -2,
+          }
+        ];
+    const result = hasChina(history);
+    t.is(true, result);
 })
