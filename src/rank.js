@@ -78,5 +78,6 @@ module.exports = {
     rating,
     voyageRisk,
     hasChina,
-captainHistoryRisk
+    captainHistoryRisk,
+    voyageProfitFactor
 };
