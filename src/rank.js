@@ -71,15 +71,18 @@ function voyageProfitFactor (voyage, history) {
   return result;
 }
 
+const resultA = 'A';
+const resultB = 'B';
+
 function rating (voyage, history) {
   const voyageProfitFactorResult = voyageProfitFactor(voyage, history);
   const voyageRiskResult = voyageRisk(voyage);
   const captainHistoryRiskResult = captainHistoryRisk(voyage, history);
   if (voyageProfitFactorResult * 3 > (voyageRiskResult + captainHistoryRiskResult * 2)) {
-    return 'A';
+    return resultA;
   }
   else {
-    return 'B';
+    return resultB;
   }
 }
 
