@@ -69,3 +69,16 @@ deliveryTest('test deliveryDate with isRush is false and deliveryState is ME', t
     const result = deliveryDate(anOrder, isRush);
     t.is(result, 6);
 })
+
+deliveryTest('test deliveryDate with isRush is false and deliveryState is ME', t => {
+    const isRush = false;
+    const anOrder = {
+        deliveryState: 'AS',
+        placedOn: {
+            plusDays: plusDays
+        }
+    }
+
+    const result = deliveryDate(anOrder, isRush);
+    t.is(result, 7);
+})
