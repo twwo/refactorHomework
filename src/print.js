@@ -1,11 +1,9 @@
 function printOwing (invoice) {
   let outstanding = calculateOutstanding(invoice.borderSpacing);
+  invoice.dueDate = getDueDate();
   let result = '***********************\n'
-                + '**** Customer Owes ****\n'
-                + '***********************\n';
-  const today = new Date();
-  invoice.dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
-
+              + '**** Customer Owes ****\n'
+              + '***********************\n';
   result += `name: ${invoice.customer}\n`
             + `amount: ${outstanding}\n`
             + `amount: ${invoice.dueDate.toLocaleDateString()}\n`;
@@ -18,6 +16,11 @@ function calculateOutstanding(borderSpacing) {
         outstanding += o.amount;
       }
     return outstanding;
+}
+
+function getDueDate() {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
 }
 
 module.exports = {
