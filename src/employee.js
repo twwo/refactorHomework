@@ -19,3 +19,11 @@ class Employee {
     return `${this._name} (${this._type})`;
   }
 }
+
+function createEmployee(name, type) {
+    return new Employee(name, type);
+}
+
+module.exports = {
+    createEmployee
+};
