@@ -1,3 +1,6 @@
+const resultA = 'A';
+const resultB = 'B';
+
 const voyageRiskChains = [
     function(voyage) {
         return 1;
@@ -24,18 +27,23 @@ function voyageRisk (voyage) {
     return Math.max(result, 0);
 }
 
-function hasChina (history) {
-  return history.some(v => 'china' === v.zone);
-}
+const captainHistoryRiskChains = [
+    function(voyage, history) {
+        return 1;
+    },
+    function(voyage, history) {
+        return history.length < 5 ? 4 : 0;
+    },
+    function(voyage, history) {
+        return voyage.zone === 'china' && hasChina(history) ? -2 : 0;
+    }
+]
 
 function captainHistoryRisk (voyage, history) {
-  let result = 1;
-  if (history.length < 5) {
-    result += 4;
-  }
+  let result = 0;
   result += history.filter(v => v.profit < 0).length;
-  if (voyage.zone === 'china' && hasChina(history)) {
-    result -= 2;
+  for (captainHistoryRiskChain of captainHistoryRiskChains) {
+    result += captainHistoryRiskChain(voyage, history);
   }
   return Math.max(result, 0);
 }
@@ -83,8 +91,9 @@ function voyageProfitFactor (voyage, history) {
   return result;
 }
 
-const resultA = 'A';
-const resultB = 'B';
+function hasChina (history) {
+  return history.some(v => 'china' === v.zone);
+}
 
 function rating (voyage, history) {
   const voyageProfitFactorResult = voyageProfitFactor(voyage, history);
