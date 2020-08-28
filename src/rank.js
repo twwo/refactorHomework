@@ -40,33 +40,45 @@ function captainHistoryRisk (voyage, history) {
   return Math.max(result, 0);
 }
 
+const voyageProfitFactorChains = [
+    function(voyage, history) {
+        return 2;
+    },
+    function(voyage, history) {
+        return voyage.zone === 'china' ? 1 : 0;
+    },
+    function(voyage, history) {
+        return voyage.zone === 'east-indies' ? 1 : 0;
+    },
+    function(voyage, history) {
+        let result = 0;
+        if (voyage.zone === 'china' && hasChina(history)) {
+            result += 3
+            if (history.length > 10) {
+                result += 1;
+            }
+            if (voyage.length > 12) {
+                result += 1;
+            }
+            if (voyage.length > 18) {
+                result -= 1;
+            }
+        } else {
+            if (history.length > 8) {
+                result += 1;
+            }
+            if (voyage.length > 14) {
+                result -= 1;
+            }
+        }
+        return result;
+    }
+]
+
 function voyageProfitFactor (voyage, history) {
-  let result = 2;
-  if (voyage.zone === 'china') {
-    result += 1;
-  }
-  if (voyage.zone === 'east-indies') {
-    result += 1;
-  }
-  if (voyage.zone === 'china' && hasChina(history)) {
-    result += 3;
-    if (history.length > 10) {
-      result += 1;
-    }
-    if (voyage.length > 12) {
-      result += 1;
-    }
-    if (voyage.length > 18) {
-      result -= 1;
-    }
-  }
-  else {
-    if (history.length > 8) {
-      result += 1;
-    }
-    if (voyage.length > 14) {
-      result -= 1;
-    }
+  let result = 0;
+  for (voyageProfitFactorChain of voyageProfitFactorChains) {
+    result += voyageProfitFactorChain(voyage, history);
   }
   return result;
 }
