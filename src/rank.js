@@ -1,18 +1,27 @@
+const voyageRiskChains = [
+    function(voyage) {
+        return 1;
+    },
+    function(voyage) {
+        return voyage.length > 4 ? 2 : 0;
+    },
+    function(voyage) {
+        return voyage.length > 8 ? voyage.length - 8 : 0;
+    },
+    function(voyage) {
+        return [
+                   'china',
+                   'east-indies',
+                 ].includes(voyage.zone) ? 4 : 0;
+    }
+]
+
 function voyageRisk (voyage) {
-  let result = 1;
-  if (voyage.length > 4) {
-    result += 2;
-  }
-  if (voyage.length > 8) {
-    result += voyage.length - 8;
-  }
-  if ([
-    'china',
-    'east-indies',
-  ].includes(voyage.zone)) {
-    result += 4;
-  }
-  return Math.max(result, 0);
+    let result = 0;
+    for (voyageRiskChain of voyageRiskChains) {
+        result += voyageRiskChain(voyage);
+    }
+    return Math.max(result, 0);
 }
 
 function hasChina (history) {
